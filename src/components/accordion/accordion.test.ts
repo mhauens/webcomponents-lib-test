@@ -1,0 +1,27 @@
+import { describe, expect, it } from 'vitest';
+import { AccordionElement } from './accordion';
+
+describe('AccordionElement', () => {
+  it('renders the provided heading and starts closed by default', () => {
+    const element = new AccordionElement();
+    element.heading = 'Frequently asked question';
+    document.body.appendChild(element);
+
+    const button = element.shadowRoot?.querySelector('button');
+
+    expect(button?.textContent).toContain('Frequently asked question');
+    expect(button?.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('toggles open state when the button is clicked', () => {
+    const element = document.createElement('wc-accordion') as AccordionElement;
+    element.setAttribute('heading', 'Toggle test');
+    document.body.appendChild(element);
+
+    const button = element.shadowRoot?.querySelector('button');
+    button?.click();
+
+    expect(element.open).toBe(true);
+    expect(button?.getAttribute('aria-expanded')).toBe('true');
+  });
+});

@@ -1,0 +1,67 @@
+{
+  "name": "@webcomponents-lib-test/components",
+  "version": "0.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Web Components library powered by Vite, TypeScript, Vitest and Storybook.",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "keywords": [
+    "web-components",
+    "storybook",
+    "vite",
+    "typescript"
+  ],
+  "packageManager": "pnpm@10.17.0",
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.7",
+    "@eslint/js": "^9.22.0",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/web-components-vite": "^8.6.14",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-storybook": "^8.6.14",
+    "globals": "^16.0.0",
+    "happy-dom": "^17.4.4",
+    "prettier": "^3.5.3",
+    "storybook": "^8.6.14",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.2",
+    "vitest": "^3.0.8"
+  }
+}
