@@ -1,0 +1,36 @@
+{
+  "name": "@mhauens/toggle",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Toggle web component package for the mhauens workspace.",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json"
+  },
+  "keywords": [
+    "web-components",
+    "toggle",
+    "switch",
+    "custom-elements",
+    "storybook"
+  ]
+}

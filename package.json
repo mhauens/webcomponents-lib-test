@@ -6,10 +6,8 @@
   "description": "Workspace for independently versioned web component packages.",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
+    "dev": "storybook dev -p 6006",
     "build": "pnpm -r --filter ./packages/* build",
-    "build:demo": "vite build",
-    "preview": "pnpm build:demo && vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",

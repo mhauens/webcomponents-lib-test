@@ -14,12 +14,12 @@ pnpm workspace for independently versioned Web Components packages based on Vite
 ## Workspace Packages
 
 - `packages/accordion` publishes `@mhauens/accordion`.
+- `packages/toggle` publishes `@mhauens/toggle`.
 
 ## Scripts
 
-- `pnpm dev` starts the Vite development server.
+- `pnpm dev` starts Storybook for component development.
 - `pnpm build` builds all publishable packages.
-- `pnpm build:demo` builds the root demo app.
 - `pnpm test` runs the unit tests once.
 - `pnpm lint` runs ESLint.
 - `pnpm format` formats the repository with Prettier.
