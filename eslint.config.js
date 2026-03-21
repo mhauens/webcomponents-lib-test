@@ -7,7 +7,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   {
-    ignores: ['dist', 'storybook-static', 'coverage']
+    ignores: ['**/dist/**', '**/storybook-static/**', '**/coverage/**']
   },
   js.configs.recommended,
   {

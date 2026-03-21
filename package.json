@@ -1,31 +1,15 @@
 {
-  "name": "@webcomponents-lib-test/components",
+  "name": "@mhauens/workspace",
   "version": "0.0.0",
-  "private": false,
+  "private": true,
   "type": "module",
-  "description": "Web Components library powered by Vite, TypeScript, Vitest and Storybook.",
+  "description": "Workspace for independently versioned web component packages.",
   "license": "MIT",
-  "files": [
-    "dist",
-    "README.md"
-  ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc -p tsconfig.build.json",
-    "preview": "vite preview",
+    "build": "pnpm -r --filter ./packages/* build",
+    "build:demo": "vite build",
+    "preview": "pnpm build:demo && vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
@@ -35,7 +19,8 @@
     "build-storybook": "storybook build",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && changeset publish",
+    "release:package": "node ./scripts/release-package.mjs"
   },
   "keywords": [
     "web-components",
@@ -45,10 +30,11 @@
   ],
   "packageManager": "pnpm@10.17.0",
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
     "@eslint/js": "^9.39.4",
-    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.18",
+    "@storybook/web-components": "^8.6.18",
     "@storybook/web-components-vite": "^8.6.18",
     "@testing-library/jest-dom": "^6.9.1",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
@@ -60,7 +46,7 @@
     "happy-dom": "^17.6.3",
     "prettier": "^3.8.1",
     "storybook": "^8.6.18",
-    "typescript": "~5.8.3",
+    "typescript": "~5.9.3",
     "vite": "^6.4.1",
     "vitest": "^3.2.4"
   }

@@ -1,2 +1,2 @@
 import './styles.css';
-import './index';
+import '../packages/accordion/src';

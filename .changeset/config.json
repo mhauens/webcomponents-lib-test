@@ -3,7 +3,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "your-org/webcomponents-lib-test"
+      "repo": "mhauens/webcomponents-lib-test"
     }
   ],
   "commit": false,

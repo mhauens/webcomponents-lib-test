@@ -1,1 +1,1 @@
-export { AccordionElement, registerAccordion } from './components/accordion/accordion';
+export { AccordionElement, registerAccordion } from '../packages/accordion/src';
