@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { expectLinkedById, getRequiredElement } from '../../../test/accessibility';
+import { expectStyleabilityHooks } from '../../../test/styleability';
 import { AccordionElement } from './accordion';
 
 describe('AccordionElement', () => {
@@ -46,5 +47,26 @@ describe('AccordionElement', () => {
     button.click();
 
     expect(panel.hidden).toBe(false);
+  });
+
+  it('exposes styling hooks for every visible region', () => {
+    const element = document.createElement('wc-accordion') as AccordionElement;
+    document.body.appendChild(element);
+
+    const shadowRoot = element.shadowRoot as ShadowRoot;
+    expectStyleabilityHooks(
+      shadowRoot,
+      [
+        { selector: '.accordion', part: 'base' },
+        { selector: 'button', part: 'trigger' },
+        { selector: '.heading', part: 'heading' },
+        { selector: '.chevron', part: 'icon' },
+        { selector: '.panel', part: 'panel' },
+        { selector: '.panel-content', part: 'content' },
+        { selector: '.panel-inner', part: 'body' },
+        { selector: 'slot', part: 'slot' }
+      ],
+      ['--wc-accordion-trigger-background', '--wc-accordion-panel-padding']
+    );
   });
 });

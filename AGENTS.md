@@ -1,4 +1,4 @@
-# AGENTS.md
+D# AGENTS.md
 
 ## Purpose
 
@@ -15,6 +15,7 @@ When creating a new component in this repository, always follow these rules:
 4. The package must be publishable as a separate GitHub Package.
 5. Every new component must include a Storybook story.
 6. Every new component must include at least one Vitest test file.
+7. Every component must be styleable from outside the component via CSS.
 
 ## Required Package Contents
 
@@ -35,6 +36,9 @@ Each new component package should include at least:
 
 - Export the component and its registration helper from `src/index.ts`.
 - Register the Custom Element with a stable tag name.
+- Expose a clear external styling API through standard CSS mechanisms such as CSS custom properties, `::part`, and host attributes or selectors where appropriate.
+- Do not lock visual styling inside the component in a way that prevents consumers from overriding or extending it from outside.
+- Document the supported external styling hooks in the package README and Storybook story when the component exposes visual customization.
 - Keep the component compatible with the existing Vite, TypeScript, Vitest, and Storybook setup.
 - Update root exports when the component should be consumable from the workspace entry point.
 - Add or update the demo entry when a visual example in the root app is useful.
@@ -49,4 +53,5 @@ Each new component package should include at least:
 
 - Do not add a component without its Storybook story.
 - Do not add a component without its Vitest coverage.
+- Do not add a component whose appearance cannot be customized externally with CSS.
 - Do not implement framework-specific components where a standard Web Component is expected.

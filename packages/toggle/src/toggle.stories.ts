@@ -114,3 +114,56 @@ export const Disabled: Story = {
     await expect(args.onChange).not.toHaveBeenCalled();
   }
 };
+
+export const CustomStyled: Story = {
+  args: {
+    label: 'Workspace notifications',
+    checked: true,
+    disabled: false,
+    description: 'Styled exclusively from outside the component via CSS variables and ::part selectors.'
+  },
+  render: ({ label, checked, disabled, description, onChange }) => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+      <style>
+        wc-toggle.demo-contrast {
+          --wc-toggle-width: 100%;
+          --wc-toggle-font-family: "Segoe UI", sans-serif;
+          --wc-toggle-color: #e0f2fe;
+          --wc-toggle-background: linear-gradient(180deg, #082f49 0%, #0f172a 100%);
+          --wc-toggle-border: 1px solid #38bdf8;
+          --wc-toggle-description-color: #bae6fd;
+          --wc-toggle-control-background: #475569;
+          --wc-toggle-control-background-checked: #38bdf8;
+          --wc-toggle-thumb-background: #f8fafc;
+        }
+
+        wc-toggle.demo-contrast::part(label) {
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        wc-toggle.demo-contrast::part(control) {
+          border: 2px solid rgba(224, 242, 254, 0.5);
+        }
+      </style>
+    `;
+
+    const toggle = document.createElement('wc-toggle');
+    toggle.className = 'demo-contrast';
+    toggle.setAttribute('label', label);
+    toggle.addEventListener('change', onChange);
+
+    if (checked) {
+      toggle.setAttribute('checked', '');
+    }
+
+    if (disabled) {
+      toggle.setAttribute('disabled', '');
+    }
+
+    toggle.textContent = description;
+    wrapper.appendChild(toggle);
+    return wrapper;
+  }
+};

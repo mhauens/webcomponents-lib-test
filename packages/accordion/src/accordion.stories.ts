@@ -33,7 +33,7 @@ const meta = {
 } satisfies Meta<AccordionStoryArgs>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<AccordionStoryArgs>;
 
 export const Default: Story = {
   args: {
@@ -71,5 +71,52 @@ export const Expanded: Story = {
     open: true,
     content:
       'Vite, TypeScript, Vitest, Storybook, ESLint, Prettier and Changesets are all preconfigured.'
+  }
+};
+
+export const CustomStyled: Story = {
+  args: {
+    heading: 'Can I change the accordion design from outside?',
+    open: true,
+    content: 'Yes. This example uses host-level CSS variables and ::part selectors only.'
+  },
+  render: ({ heading, open, content }) => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = `
+      <style>
+        wc-accordion.demo-accent {
+          --wc-accordion-width: 100%;
+          --wc-accordion-font-family: "Segoe UI", sans-serif;
+          --wc-accordion-border: 2px solid #7c2d12;
+          --wc-accordion-radius: 1.5rem;
+          --wc-accordion-background: #fff7ed;
+          --wc-accordion-shadow: 0 18px 40px rgba(124, 45, 18, 0.16);
+          --wc-accordion-trigger-background: linear-gradient(180deg, #fed7aa 0%, #ffedd5 100%);
+          --wc-accordion-panel-color: #7c2d12;
+          --wc-accordion-icon-color: #c2410c;
+        }
+
+        wc-accordion.demo-accent::part(trigger) {
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        wc-accordion.demo-accent::part(body) {
+          font-size: 1rem;
+        }
+      </style>
+    `;
+
+    const accordion = document.createElement('wc-accordion');
+    accordion.className = 'demo-accent';
+    accordion.setAttribute('heading', heading);
+
+    if (open) {
+      accordion.setAttribute('open', '');
+    }
+
+    accordion.innerHTML = `<p>${content}</p>`;
+    wrapper.appendChild(accordion);
+    return wrapper;
   }
 };

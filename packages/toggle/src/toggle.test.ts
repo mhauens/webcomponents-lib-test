@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { expectLinkedById, getRequiredElement } from '../../../test/accessibility';
+import { expectStyleabilityHooks } from '../../../test/styleability';
 import { ToggleElement } from './toggle';
 
 describe('ToggleElement', () => {
@@ -64,5 +65,25 @@ describe('ToggleElement', () => {
 
     expect(button).toBeDisabled();
     expect(button.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  it('exposes styling hooks for every visible region', () => {
+    const element = document.createElement('wc-toggle') as ToggleElement;
+    document.body.appendChild(element);
+
+    const shadowRoot = element.shadowRoot as ShadowRoot;
+    expectStyleabilityHooks(
+      shadowRoot,
+      [
+        { selector: '.toggle', part: 'base' },
+        { selector: '.copy', part: 'copy' },
+        { selector: '.label', part: 'label' },
+        { selector: '.description', part: 'description' },
+        { selector: 'slot', part: 'slot' },
+        { selector: 'button', part: 'control' },
+        { selector: '.thumb', part: 'thumb' }
+      ],
+      ['--wc-toggle-background', '--wc-toggle-thumb-transform-checked']
+    );
   });
 });

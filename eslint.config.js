@@ -35,6 +35,7 @@ export default [
       '@typescript-eslint': tseslint
     },
     rules: {
+      'no-undef': 'off',
       ...tseslint.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': [
         'error',

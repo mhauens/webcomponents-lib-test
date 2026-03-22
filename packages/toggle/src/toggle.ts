@@ -6,39 +6,39 @@ template.innerHTML = `
   <style>
     :host {
       display: inline-block;
-      width: min(100%, 26rem);
-      font-family: Inter, system-ui, sans-serif;
-      color: #0f172a;
+      width: var(--wc-toggle-width, min(100%, 26rem));
+      font-family: var(--wc-toggle-font-family, inherit);
+      color: var(--wc-toggle-color, #0f172a);
     }
 
     .toggle {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 1.125rem;
-      border: 1px solid #cbd5e1;
-      border-radius: 1rem;
-      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      gap: var(--wc-toggle-gap, 1rem);
+      padding: var(--wc-toggle-padding, 1rem 1.125rem);
+      border: var(--wc-toggle-border, 1px solid #cbd5e1);
+      border-radius: var(--wc-toggle-radius, 1rem);
+      background: var(--wc-toggle-background, linear-gradient(180deg, #ffffff 0%, #f8fafc 100%));
+      box-shadow: var(--wc-toggle-shadow, 0 12px 28px rgba(15, 23, 42, 0.08));
     }
 
     .copy {
       display: grid;
-      gap: 0.25rem;
+      gap: var(--wc-toggle-copy-gap, 0.25rem);
       min-width: 0;
     }
 
     .label {
-      font-size: 0.95rem;
-      font-weight: 700;
-      line-height: 1.2;
+      font-size: var(--wc-toggle-label-font-size, 0.95rem);
+      font-weight: var(--wc-toggle-label-font-weight, 700);
+      line-height: var(--wc-toggle-label-line-height, 1.2);
     }
 
     .description {
-      font-size: 0.875rem;
-      line-height: 1.4;
-      color: #475569;
+      font-size: var(--wc-toggle-description-font-size, 0.875rem);
+      line-height: var(--wc-toggle-description-line-height, 1.4);
+      color: var(--wc-toggle-description-color, #475569);
     }
 
     .description:empty {
@@ -49,52 +49,51 @@ template.innerHTML = `
       all: unset;
       box-sizing: border-box;
       flex-shrink: 0;
-      width: 3.5rem;
-      height: 2rem;
-      border-radius: 999px;
-      padding: 0.2rem;
-      background: #cbd5e1;
+      width: var(--wc-toggle-control-width, 3.5rem);
+      height: var(--wc-toggle-control-height, 2rem);
+      border-radius: var(--wc-toggle-control-radius, 999px);
+      padding: var(--wc-toggle-control-padding, 0.2rem);
+      background: var(--wc-toggle-control-background, #cbd5e1);
       cursor: pointer;
       transition:
-        background-color 0.2s ease,
-        opacity 0.2s ease;
+        var(--wc-toggle-control-transition, background-color 0.2s ease, opacity 0.2s ease);
     }
 
     button:focus-visible {
-      outline: 3px solid #2563eb;
-      outline-offset: 3px;
+      outline: var(--wc-toggle-focus-outline, 3px solid #2563eb);
+      outline-offset: var(--wc-toggle-focus-outline-offset, 3px);
     }
 
     button[aria-checked='true'] {
-      background: #0f766e;
+      background: var(--wc-toggle-control-background-checked, #0f766e);
     }
 
     button[aria-disabled='true'] {
-      opacity: 0.55;
-      cursor: not-allowed;
+      opacity: var(--wc-toggle-control-disabled-opacity, 0.55);
+      cursor: var(--wc-toggle-control-disabled-cursor, not-allowed);
     }
 
     .thumb {
       display: block;
-      width: 1.6rem;
-      height: 1.6rem;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.16);
-      transition: transform 0.2s ease;
+      width: var(--wc-toggle-thumb-size, 1.6rem);
+      height: var(--wc-toggle-thumb-size, 1.6rem);
+      border-radius: var(--wc-toggle-thumb-radius, 50%);
+      background: var(--wc-toggle-thumb-background, #ffffff);
+      box-shadow: var(--wc-toggle-thumb-shadow, 0 4px 12px rgba(15, 23, 42, 0.16));
+      transition: var(--wc-toggle-thumb-transition, transform 0.2s ease);
     }
 
     button[aria-checked='true'] .thumb {
-      transform: translateX(1.5rem);
+      transform: var(--wc-toggle-thumb-transform-checked, translateX(1.5rem));
     }
   </style>
-  <section class="toggle">
-    <div class="copy">
-      <span class="label"></span>
-      <span class="description"><slot></slot></span>
+  <section class="toggle" part="base">
+    <div class="copy" part="copy">
+      <span class="label" part="label"></span>
+      <span class="description" part="description"><slot part="slot"></slot></span>
     </div>
-    <button type="button" role="switch" aria-checked="false" aria-disabled="false">
-      <span class="thumb" aria-hidden="true"></span>
+    <button type="button" role="switch" aria-checked="false" aria-disabled="false" part="control">
+      <span class="thumb" part="thumb" aria-hidden="true"></span>
     </button>
   </section>
 `;

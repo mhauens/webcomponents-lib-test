@@ -6,17 +6,17 @@ template.innerHTML = `
   <style>
     :host {
       display: block;
-      width: min(100%, 40rem);
-      font-family: Inter, system-ui, sans-serif;
-      color: #111827;
+      width: var(--wc-accordion-width, min(100%, 40rem));
+      font-family: var(--wc-accordion-font-family, inherit);
+      color: var(--wc-accordion-color, #111827);
     }
 
     .accordion {
-      border: 1px solid #d1d5db;
-      border-radius: 0.75rem;
-      background: #ffffff;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      overflow: hidden;
+      border: var(--wc-accordion-border, 1px solid #d1d5db);
+      border-radius: var(--wc-accordion-radius, 0.75rem);
+      background: var(--wc-accordion-background, #ffffff);
+      box-shadow: var(--wc-accordion-shadow, 0 10px 30px rgba(15, 23, 42, 0.08));
+      overflow: var(--wc-accordion-overflow, hidden);
     }
 
     button {
@@ -26,30 +26,33 @@ template.innerHTML = `
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 1.25rem;
+      gap: var(--wc-accordion-trigger-gap, 1rem);
+      padding: var(--wc-accordion-trigger-padding, 1rem 1.25rem);
       cursor: pointer;
-      font-weight: 600;
-      background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+      font-weight: var(--wc-accordion-trigger-font-weight, 600);
+      color: var(--wc-accordion-trigger-color, inherit);
+      background: var(--wc-accordion-trigger-background, linear-gradient(180deg, #ffffff 0%, #f9fafb 100%));
     }
 
     button:focus-visible {
-      outline: 3px solid #2563eb;
-      outline-offset: -3px;
+      outline: var(--wc-accordion-focus-outline, 3px solid #2563eb);
+      outline-offset: var(--wc-accordion-focus-outline-offset, -3px);
     }
 
     .chevron {
-      transition: transform 0.2s ease;
+      color: var(--wc-accordion-icon-color, currentColor);
+      transition: var(--wc-accordion-icon-transition, transform 0.2s ease);
     }
 
     .chevron.open {
-      transform: rotate(180deg);
+      transform: var(--wc-accordion-icon-open-transform, rotate(180deg));
     }
 
     .panel {
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows 0.2s ease;
+      background: var(--wc-accordion-panel-background, transparent);
+      transition: var(--wc-accordion-panel-transition, grid-template-rows 0.2s ease);
     }
 
     .panel.open {
@@ -61,19 +64,19 @@ template.innerHTML = `
     }
 
     .panel-inner {
-      padding: 0 1.25rem 1rem;
-      color: #4b5563;
+      padding: var(--wc-accordion-panel-padding, 0 1.25rem 1rem);
+      color: var(--wc-accordion-panel-color, #4b5563);
     }
   </style>
-  <section class="accordion">
-    <button type="button" aria-expanded="false">
-      <span class="heading"></span>
-      <span class="chevron" aria-hidden="true">⌄</span>
+  <section class="accordion" part="base">
+    <button type="button" aria-expanded="false" part="trigger">
+      <span class="heading" part="heading"></span>
+      <span class="chevron" part="icon" aria-hidden="true">⌄</span>
     </button>
-    <div class="panel" role="region">
-      <div class="panel-content">
-        <div class="panel-inner">
-          <slot></slot>
+    <div class="panel" role="region" part="panel">
+      <div class="panel-content" part="content">
+        <div class="panel-inner" part="body">
+          <slot part="slot"></slot>
         </div>
       </div>
     </div>
