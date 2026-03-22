@@ -9,6 +9,14 @@ export default [
   {
     ignores: ['**/dist/**', '**/storybook-static/**', '**/coverage/**']
   },
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    }
+  },
   js.configs.recommended,
   {
     files: ['**/*.{ts,tsx}'],
