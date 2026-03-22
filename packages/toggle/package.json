@@ -1,6 +1,6 @@
 {
   "name": "@mhauens/toggle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "type": "module",
   "description": "Toggle web component package for the mhauens workspace.",

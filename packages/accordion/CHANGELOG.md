@@ -1,5 +1,11 @@
 # @mhauens/accordion
 
+## 0.1.2
+
+### Patch Changes
+
+- testing
+
 ## 0.1.1
 
 ### Patch Changes
