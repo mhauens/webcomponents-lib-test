@@ -1,18 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, fn } from 'storybook/test';
+
 import './toggle';
 
-const meta: Meta = {
+type ToggleStoryArgs = {
+  label: string;
+  checked: boolean;
+  disabled: boolean;
+  description: string;
+  onChange: ReturnType<typeof fn>;
+};
+
+const meta = {
   title: 'Components/Toggle',
   tags: ['autodocs'],
+  args: {
+    onChange: fn()
+  },
   argTypes: {
     label: { control: 'text' },
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
-    description: { control: 'text' }
+    description: { control: 'text' },
+    onChange: { table: { disable: true } }
   },
-  render: ({ label, checked, disabled, description }) => {
+  render: ({ label, checked, disabled, description, onChange }) => {
     const toggle = document.createElement('wc-toggle');
     toggle.setAttribute('label', label);
+    toggle.addEventListener('change', onChange);
 
     if (checked) {
       toggle.setAttribute('checked', '');
@@ -29,10 +44,10 @@ const meta: Meta = {
     toggle.textContent = description;
     return toggle;
   }
-};
+} satisfies Meta<ToggleStoryArgs>;
 
 export default meta;
-type Story = StoryObj<{ label: string; checked: boolean; disabled: boolean; description: string }>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -40,6 +55,26 @@ export const Default: Story = {
     checked: false,
     disabled: false,
     description: 'Receive weekly product updates and account notifications.'
+  },
+  play: async ({ args, canvasElement, userEvent }) => {
+    const toggle = canvasElement.querySelector('wc-toggle');
+
+    if (!(toggle instanceof HTMLElement) || !toggle.shadowRoot) {
+      throw new Error('Expected rendered toggle element.');
+    }
+
+    const button = toggle.shadowRoot.querySelector('button');
+
+    if (!(button instanceof HTMLButtonElement)) {
+      throw new Error('Expected toggle button.');
+    }
+
+    await expect(button).toHaveAttribute('aria-checked', 'false');
+
+    await userEvent.click(button);
+
+    await expect(button).toHaveAttribute('aria-checked', 'true');
+    await expect(args.onChange).toHaveBeenCalledTimes(1);
   }
 };
 
@@ -58,5 +93,24 @@ export const Disabled: Story = {
     checked: true,
     disabled: true,
     description: 'Managed by your workspace administrator.'
+  },
+  play: async ({ args, canvasElement, userEvent }) => {
+    const toggle = canvasElement.querySelector('wc-toggle');
+
+    if (!(toggle instanceof HTMLElement) || !toggle.shadowRoot) {
+      throw new Error('Expected rendered toggle element.');
+    }
+
+    const button = toggle.shadowRoot.querySelector('button');
+
+    if (!(button instanceof HTMLButtonElement)) {
+      throw new Error('Expected toggle button.');
+    }
+
+    await userEvent.click(button);
+
+    await expect(button).toBeDisabled();
+    await expect(button).toHaveAttribute('aria-checked', 'true');
+    await expect(args.onChange).not.toHaveBeenCalled();
   }
 };

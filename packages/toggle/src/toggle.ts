@@ -1,5 +1,7 @@
 const template = document.createElement('template');
 
+let toggleInstanceCount = 0;
+
 template.innerHTML = `
   <style>
     :host {
@@ -98,6 +100,8 @@ template.innerHTML = `
 `;
 
 export class ToggleElement extends HTMLElement {
+  private readonly instanceId = ++toggleInstanceCount;
+
   static get observedAttributes(): string[] {
     return ['label', 'checked', 'disabled'];
   }
@@ -172,10 +176,17 @@ export class ToggleElement extends HTMLElement {
     return this.shadowRoot?.querySelector('.label') as HTMLSpanElement;
   }
 
+  private get labelId(): string {
+    return `wc-toggle-label-${this.instanceId}`;
+  }
+
   private render(): void {
     this.labelElement.textContent = this.label || 'Toggle';
+    this.labelElement.id = this.labelId;
+    this.button.setAttribute('aria-labelledby', this.labelId);
     this.button.setAttribute('aria-checked', String(this.checked));
     this.button.setAttribute('aria-disabled', String(this.disabled));
+    this.button.disabled = this.disabled;
   }
 }
 

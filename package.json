@@ -30,7 +30,9 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
+    "@chromatic-com/storybook": "^5.0.2",
     "@eslint/js": "^10.0.1",
+    "@storybook/addon-a11y": "^10.3.1",
     "@storybook/addon-docs": "^10.3.1",
     "@storybook/addon-vitest": "^10.3.1",
     "@storybook/web-components": "^10.3.1",

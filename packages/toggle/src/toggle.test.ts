@@ -1,4 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
+
+import { expectLinkedById, getRequiredElement } from '../../../test/accessibility';
 import { ToggleElement } from './toggle';
 
 describe('ToggleElement', () => {
@@ -38,5 +40,29 @@ describe('ToggleElement', () => {
 
     expect(element.checked).toBe(false);
     expect(button?.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  it('associates the switch with its visible label', () => {
+    const element = document.createElement('wc-toggle') as ToggleElement;
+    element.label = 'Marketing notifications';
+    document.body.appendChild(element);
+
+    const shadowRoot = element.shadowRoot as ShadowRoot;
+    const button = getRequiredElement<HTMLButtonElement>(shadowRoot, 'button');
+    const label = getRequiredElement<HTMLSpanElement>(shadowRoot, '.label');
+
+    expect(label.id).not.toBe('');
+    expectLinkedById(button, 'aria-labelledby', label);
+  });
+
+  it('uses native disabled semantics when unavailable', () => {
+    const element = document.createElement('wc-toggle') as ToggleElement;
+    element.disabled = true;
+    document.body.appendChild(element);
+
+    const button = getRequiredElement<HTMLButtonElement>(element.shadowRoot as ShadowRoot, 'button');
+
+    expect(button).toBeDisabled();
+    expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 });

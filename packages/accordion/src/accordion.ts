@@ -1,5 +1,7 @@
 const template = document.createElement('template');
 
+let accordionInstanceCount = 0;
+
 template.innerHTML = `
   <style>
     :host {
@@ -79,6 +81,8 @@ template.innerHTML = `
 `;
 
 export class AccordionElement extends HTMLElement {
+  private readonly instanceId = ++accordionInstanceCount;
+
   static get observedAttributes(): string[] {
     return ['heading', 'open'];
   }
@@ -135,6 +139,14 @@ export class AccordionElement extends HTMLElement {
     return this.shadowRoot?.querySelector('.heading') as HTMLSpanElement;
   }
 
+  private get panelId(): string {
+    return `wc-accordion-panel-${this.instanceId}`;
+  }
+
+  private get buttonId(): string {
+    return `wc-accordion-button-${this.instanceId}`;
+  }
+
   private get panel(): HTMLDivElement {
     return this.shadowRoot?.querySelector('.panel') as HTMLDivElement;
   }
@@ -145,7 +157,12 @@ export class AccordionElement extends HTMLElement {
 
   private render(): void {
     this.headingElement.textContent = this.heading || 'Accordion';
+    this.button.id = this.buttonId;
     this.button.setAttribute('aria-expanded', String(this.open));
+    this.button.setAttribute('aria-controls', this.panelId);
+    this.panel.id = this.panelId;
+    this.panel.setAttribute('aria-labelledby', this.buttonId);
+    this.panel.hidden = !this.open;
     this.panel.classList.toggle('open', this.open);
     this.chevron.classList.toggle('open', this.open);
   }
