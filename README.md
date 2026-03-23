@@ -94,21 +94,21 @@ pnpm release:package -- dry-run
 
 ```bash
 export NODE_AUTH_TOKEN="<your-github-packages-token>"
-pnpm release
+pnpm release:package
 ```
 
 On Windows `cmd`:
 
 ```cmd
 set NODE_AUTH_TOKEN=<your-github-packages-token>
-pnpm release
+pnpm release:package
 ```
 
 On Windows PowerShell:
 
 ```powershell
 $env:NODE_AUTH_TOKEN="<your-github-packages-token>"
-pnpm release
+pnpm release:package
 ```
 
 For day-to-day development, the repository does not require `NODE_AUTH_TOKEN`; only publishing to GitHub Packages does.
